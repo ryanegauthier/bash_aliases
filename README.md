@@ -4,17 +4,21 @@ I did an extensive google search of handy linux commands and lists of handy alia
 
 ## Required Files
 
-You just need to download the .bash_aliases file directly into your home directory and find the lines in your .bashrc file that looks something like this 
+You just need to download the .bash_aliases file directly into your home directory and find the lines in your .bashrc file that looks something like this:
 
-`# Alias definitions. `
-`# You may want to put all your additions into a separate file like`
-`# ~/.bash_aliases, instead of adding them here directly.`
-`# See /usr/share/doc/bash-doc/examples in the bash-doc package.`
-## Possible update needed
-And add (if it doesn't already exist)
-`if [ -f ~/.bash_aliases ]; then`
-`    . ~/.bash_aliases`
-`fi`
+~~~
+# Alias definitions. 
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+~~~
+
+Add (if it doesn't already exist)
+```
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+```
 
 ## Final instructions
 And now you're ready to rock and roll (or possibly smooth jazz)! Well, first you'll need a reboot of your terminal of course. From then on out I included a `reload` alias so you can kiss terminal reboots good-bye!
