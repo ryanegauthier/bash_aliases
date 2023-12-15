@@ -1,7 +1,7 @@
 alias aka='nano ~/.bash_aliases'
 
 alias cmd='history|grep'
-alias please='sudo !!'
+alias please='sudo $(history -p !!)'
 alias untar='tar -zxvf '
 
 # generators
