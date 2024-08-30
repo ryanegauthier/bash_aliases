@@ -70,7 +70,7 @@ alias gstat='git status'
 alias gdiff='git diff --name-status'
 alias branches='git branch -a'
 
-
+alias admin_edit='xed admin://'
 
 ###### IT commands ######
 
