@@ -4,54 +4,93 @@ alias cmd='history|grep'
 alias please='sudo $(history -p !!)'
 alias untar='tar -zxvf '
 
-# generators
-alias getpass='openssl rand -base64 20'
-alias mrid='uuidgen'
-alias sshkey='ssh-keygen -t ed25519 -C'
-
-# network tests
-alias ping='ping -c 5'
-alias fastping='ping -c 100 -s .2'
-alias speed='speedtest-cli --server 2406 --simple'
-
-alias ipex='dig +short myip.opendns.com @resolver1.opendns.com'
-alias ipin='hostname -I | awk "{print \$1}"'
-alias myips='ip addr show | grep -Eo "inet ([0-9]*\.){3}[0-9]*" | grep -Eo "([0-9]*\.){3}[0-9]*" | grep -v "127.0.0.1"'
-alias tailip='tailscale ip'
-alias wifistat='nmcli dev status'
-
-# system health
-alias ptree='ps aux'
-alias reboot='sudo reboot'
-alias off='sudo shutdown -h now'
-alias reload='source ~/.bashrc'
-
-# file management
-alias ll='ls -la'
-alias bc='bc -l'
-alias mkdir='mkdir -pv'
-alias mv='mv -i'
-alias cp='cp -i'
-alias ln='ln -i'
-alias backup='tar -zcvf $(date +%Y%m%d).tar.gz'
-alias nuke='sudo rm -rf'
-
+# navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ~='cd ~'
+alias c='clear'
+alias h='history'
+alias j='jobs -l'
 alias up='cd ..'
 alias up2='cd ../..'
 alias up3='cd ../../..'
 alias up4='cd ../../../..'
 alias up5='cd ../../../../..'
 
+# generators
+alias getpass='openssl rand -base64 20'
+alias mrid='uuidgen'
+alias sshkey='ssh-keygen -t ed25519 -C'
+alias pubkey='cat ~/.ssh/id_ed25519.pub'
+
+# network tests
+alias ping='ping -c 5'
+alias speed='speedtest-cli --server 2406 --simple'
+alias ipex='dig +short myip.opendns.com @resolver1.opendns.com'
+alias ipin='hostname -I | awk "{print \$1}"'
+alias myips='ip addr show | grep -Eo "inet ([0-9]*\.){3}[0-9]*" | grep -Eo "([0-9]*\.){3}[0-9]*" | grep -v "127.0.0.1"'
+alias tailip='tailscale ip'
+alias wifistat='nmcli dev status'
+alias listen='ss -tulanp'
+alias openports='ss -tulanp | grep LISTEN'
+alias weather='curl wttr.in/Spokane'
+
+# system health
+alias ptree='ps aux'
+alias reboot='sudo reboot'
+alias off='sudo shutdown -h now'
+alias reload='source ~/.bashrc'
+alias meminfo='free -m -l -t'
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias cpuinfo='lscpu'
+
+# file management
+alias ll='ls -la'
+alias mkdir='mkdir -pv'
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+alias rm='rm -I --preserve-root'
+alias nuke='sudo rm -rf'
+alias backup='tar -zcvf $(date +%Y%m%d).tar.gz'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias diff='diff --color=auto'
+alias less='less -R'
+alias tree='tree -C'
+alias df='df -h'
+alias du='du -h'
+alias duh='du -sh *'
+alias biggest='du -sh * | sort -rh | head -10'
+alias wget='wget -c'
+
 # system variables
 alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
 alias nowdate='date +"%d-%m-%Y"'
 
-# kubectl - more in the .kubectl_aliases file
-alias cuddle='kubectl'
+# update on one command
+alias update='sudo apt update && sudo apt upgrade -y'
 
+# permissions (safe)
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
 
-# docker
+###### IT commands ######
+alias ports='netstat -tulanp'
+
+# ufw firewall
+alias fwstatus='sudo ufw status verbose'
+alias fwallow='sudo ufw allow'
+alias fwdeny='sudo ufw deny'
+alias firewall='sudo ufw status verbose'
+
+###### docker ######
 alias dk='docker'
 alias dkl='docker logs -f'
 alias dki='docker images'
@@ -64,8 +103,7 @@ alias dkup='docker compose up -d'
 alias dkdown='docker compose down'
 alias dkre='docker compose restart'
 
-
-# git
+###### git ######
 alias clone='git clone'
 alias commit='git commit -m'
 alias push='git push'
@@ -77,63 +115,15 @@ alias gdiff='git diff --name-status'
 alias branches='git branch -a'
 alias glog='git log --oneline --graph --decorate'
 
-# removed: alias admin_edit='xed admin://' — xed is GUI only, not available on headless server
-
-###### IT commands ######
-
-alias ports='netstat -tulanp'
-
-# shortcut for iptables and pass it via sudo
-alias ipt='sudo /sbin/iptables'
-
-# display all rules
-alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
-alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
-alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
-alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
-alias firewall='iptlist'
-
-# ufw shortcuts
-alias fwstatus='sudo ufw status verbose'
-alias fwallow='sudo ufw allow'
-alias fwdeny='sudo ufw deny'
-
-# do not delete / or prompt if deleting more than 3 files at a time
-alias rm='rm -I --preserve-root'
-
-# Parenting changing perms on /
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
-
-# update on one command
-alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt update && sudo apt upgrade -y'
-
-# pass options to free
-alias meminfo='free -m -l -t'
-
-# get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10'
-
-# get top process eating cpu
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
-
-# Get server cpu info
-alias cpuinfo='lscpu'
-
-# removed: gpumeminfo and shogpu — Xorg/nvidia not applicable on headless Intel Mac server
-
-# Home Assistant
+###### Home Assistant ######
 alias halogs='docker logs -f homeassistant'
 alias harestart='docker restart homeassistant'
 
-# OpenClaw
+###### OpenClaw ######
 alias clawlogs='journalctl -u openclaw -f'
 alias clawrestart='sudo systemctl restart openclaw'
 
-# Tailscale
+###### Tailscale ######
 alias tsup='sudo tailscale up'
 alias tsdown='sudo tailscale down'
 alias tsstatus='tailscale status'
