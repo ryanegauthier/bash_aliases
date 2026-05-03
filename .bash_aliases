@@ -16,7 +16,9 @@ alias speed='speedtest-cli --server 2406 --simple'
 
 alias ipex='dig +short myip.opendns.com @resolver1.opendns.com'
 alias ipin='hostname -I | awk "{print \$1}"'
-alias myips='ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | grep -Eo "([0-9]*\.){3}[0-9]*" | grep -v "127.0.0.1"'
+alias myips='ip addr show | grep -Eo "inet ([0-9]*\.){3}[0-9]*" | grep -Eo "([0-9]*\.){3}[0-9]*" | grep -v "127.0.0.1"'
+alias tailip='tailscale ip'
+alias wifistat='nmcli dev status'
 
 # system health
 alias ptree='ps aux'
@@ -58,60 +60,80 @@ alias dpsa='docker ps -a'
 alias deit='docker exec -it'
 alias drmc='docker rm $(docker ps --all -q -f status=exited)'
 alias drmid='docker rmi $(docker images -q -f dangling=true)'
+alias dkup='docker compose up -d'
+alias dkdown='docker compose down'
+alias dkre='docker compose restart'
 
 
 # git
 alias clone='git clone'
 alias commit='git commit -m'
 alias push='git push'
+alias pull='git pull'
 alias gcb='git checkout -b'
 alias gco='git checkout'
 alias gstat='git status'
 alias gdiff='git diff --name-status'
 alias branches='git branch -a'
+alias glog='git log --oneline --graph --decorate'
 
-alias admin_edit='xed admin://'
+# removed: alias admin_edit='xed admin://' — xed is GUI only, not available on headless server
 
 ###### IT commands ######
 
 alias ports='netstat -tulanp'
 
-# shortcut  for iptables and pass it via sudo#
+# shortcut for iptables and pass it via sudo
 alias ipt='sudo /sbin/iptables'
- 
-# display all rules #
+
+# display all rules
 alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
 alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
 alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall='iptlist'
 
-# do not delete / or prompt if deleting more than 3 files at a time #
+# ufw shortcuts
+alias fwstatus='sudo ufw status verbose'
+alias fwallow='sudo ufw allow'
+alias fwdeny='sudo ufw deny'
+
+# do not delete / or prompt if deleting more than 3 files at a time
 alias rm='rm -I --preserve-root'
-  
-# Parenting changing perms on / #
+
+# Parenting changing perms on /
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # update on one command
-alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt update && sudo apt upgrade' 
+alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt update && sudo apt upgrade -y'
 
-# pass options to free ##
+# pass options to free
 alias meminfo='free -m -l -t'
- 
+
 # get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
- 
-# get top process eating cpu ##
+
+# get top process eating cpu
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
- 
-# Get server cpu info ##
-alias cpuinfo='lscpu'
- 
-# get GPU ram on desktop / laptop##
-alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
-alias shogpu='watch -d -n 0.5 nvidia-smi' 
 
+# Get server cpu info
+alias cpuinfo='lscpu'
+
+# removed: gpumeminfo and shogpu — Xorg/nvidia not applicable on headless Intel Mac server
+
+# Home Assistant
+alias halogs='docker logs -f homeassistant'
+alias harestart='docker restart homeassistant'
+
+# OpenClaw
+alias clawlogs='journalctl -u openclaw -f'
+alias clawrestart='sudo systemctl restart openclaw'
+
+# Tailscale
+alias tsup='sudo tailscale up'
+alias tsdown='sudo tailscale down'
+alias tsstatus='tailscale status'
