@@ -125,5 +125,12 @@ alias clawrestart='sudo systemctl restart openclaw'
 
 ###### Tailscale ######
 alias tsup='sudo tailscale up'
+
+###### tmux ######
+alias tmls='tmux ls'
+alias tmat='tmux attach -t'
+alias tmnew='tmux new -s'
+alias tmkill='tmux kill-session -t'
+alias tmclaw='tmux attach -t openclaw'
 alias tsdown='sudo tailscale down'
 alias tsstatus='tailscale status'
